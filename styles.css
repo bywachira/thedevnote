@@ -1,5 +1,3 @@
-@import url("https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap");
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,8 +6,7 @@ html,
 body {
   padding: 0px;
   margin: 0px;
-  background: #000;
-  font-family: "Indie Flower", cursive;
+  background-color: #000;
 }
 
 .content {
@@ -26,17 +23,22 @@ body {
 
 .notion-text,
 .notion-callout-text {
-  color: #fff !important;
+  color: #d1d5db !important;
 }
 
 .notion-text {
-  font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
-
+  font-family: 'Inter', sans-serif;
   font-size: 22px !important;
 }
 
+@media only screen and (max-width: 608px) {
+  .notion-text {
+    font-size: 22px !important;
+  }
+}
+
 .notion-image-caption {
-  color: #fff !important;
+  color: #d1d5db !important;
 }
 
 .grayscale,

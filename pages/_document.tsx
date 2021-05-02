@@ -17,7 +17,9 @@ class MyDocument extends Document {
       <Html>
         <script
           dangerouslySetInnerHTML={{
-            __html: `<script type="text/javascript">
+            __html: `
+            <script async src="https://cdn.splitbee.io/sb.js"></script>
+            <script type="text/javascript">
             if ('serviceWorker' in navigator) {
                 window.addEventListener('load', function () {
                   navigator.serviceWorker.register('service-worker.js').then(function (registration) {

@@ -20,6 +20,11 @@ export default function Meta(props: MetaProps): React.ReactElement {
     <Head key={1}>
       <link rel="shortcut icon" href="/favicon.ico" />
       <link rel="manifest" href="/manifest.json" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&display=swap"
+        rel="stylesheet"
+      />
       <title>The Dev Note</title>
       <meta name="title" content={TITLE} />
       <meta name="description" content={DESCRIPTION} />

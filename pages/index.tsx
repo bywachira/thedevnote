@@ -9,13 +9,14 @@ export type Post = {
   slug: string;
   title: string;
   date: string;
-  is_draft: boolean;
+  is_published: boolean;
   cover: {
     name: string;
     rawUrl: string;
     url: string;
   }[];
   type: string;
+  description: string;
 };
 
 export const getAllPosts = async (): Promise<Post[]> => {
@@ -24,7 +25,7 @@ export const getAllPosts = async (): Promise<Post[]> => {
   ).then((res) => res.json());
 };
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const posts = await getAllPosts();
   return {
     props: {
@@ -33,18 +34,14 @@ export async function getStaticProps() {
   };
 }
 
-{
-  /* <img src={post?.cover[0].url} alt={post.title} /> */
-}
-
 function HomePage({ posts }: { posts: Post[] }) {
   return (
     <>
       <Meta />
-      <div className="content p-4 font-serif">
-        <div>
+      <div className="content p-4 font-sans">
+        <div className="grid grid-cols-1 divide-y divide-yellow-50">
           {posts.map((post) => {
-            if (!post?.is_draft) {
+            if (post?.is_published) {
               return (
                 <Link
                   href="/note/[slug]"
@@ -52,19 +49,23 @@ function HomePage({ posts }: { posts: Post[] }) {
                   key={post.slug}
                 >
                   <a className="w-full lg:flex my-4">
-                    {post?.cover && (
-                      <section
-                        className="h-48 grayscale lg:h-auto lg:w-48 flex-none bg-cover text-center overflow-hidden"
-                        style={{
-                          backgroundImage: `url(${post?.cover[0].url})`,
-                        }}
-                      ></section>
-                    )}
                     <section className="p-4 flex flex-col justify-between leading-normal">
-                      <b className="text-white font-serif text-2xl">
+                      <h2 className="text-white font-bold text-lg">
                         {post.title}
-                      </b>
-                      <div className="text-gray-400">jotted on {post.date}</div>
+                      </h2>
+                      <p className="text-gray-400">{post.description}</p>
+                      {/* {post.cover && (
+                        <section>
+                          <img
+                            src={post?.cover[0].url}
+                            alt={post.title}
+                            className="rounded-lg"
+                          />
+                        </section>
+                      )} */}
+                      <div className="text-gray-300 italic">
+                        jotted on {post.date}
+                      </div>
                     </section>
                   </a>
                 </Link>
