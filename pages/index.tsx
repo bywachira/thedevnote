@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Meta from "../components/head";
+import { getDatabase, getPage } from "../services/getPosts";
 
-const NOTION_BLOG_ID =
-  process.env.NOTION_BLOG_ID || "7d52200c3d6e4e89a1fa20d855ff88f0";
+const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
 
 export type Post = {
   id: string;
@@ -19,60 +19,65 @@ export type Post = {
   description: string;
 };
 
-export const getAllPosts = async (): Promise<Post[]> => {
-  return await fetch(
-    `https://notion.thedenseabyss.xyz/v1/table/${NOTION_BLOG_ID}`
-  ).then((res) => res.json());
-};
+export const getServerSideProps = async () => {
+  const database = await getDatabase(NOTION_BLOG_ID);
 
-export async function getServerSideProps() {
-  const posts = await getAllPosts();
   return {
     props: {
-      posts,
+      posts: database,
     },
   };
-}
+};
 
-function HomePage({ posts }: { posts: Post[] }) {
+function HomePage({ posts }: { posts: any }) {
   return (
     <>
       <Meta />
-      <div className="content p-4 font-sans">
-        <div className="grid grid-cols-1 divide-y divide-yellow-50">
-          {posts.map((post) => {
-            if (post?.is_published) {
-              return (
-                <Link
-                  href="/note/[slug]"
-                  as={`/note/${post.slug}`}
-                  key={post.slug}
-                >
-                  <a className="w-full lg:flex my-4">
-                    <section className="p-4 flex flex-col justify-between leading-normal">
-                      <h2 className="text-white font-bold text-lg">
-                        {post.title}
-                      </h2>
-                      <p className="text-gray-400">{post.description}</p>
-                      {/* {post.cover && (
-                        <section>
-                          <img
-                            src={post?.cover[0].url}
-                            alt={post.title}
-                            className="rounded-lg"
-                          />
+      <div className="max-w-3xl p-4 font-sans">
+        <section className="flex justify-center w-full">
+          <div className="flex flex-col justify-center">
+            <section>
+              <h1 className="text-white text-4xl">My thoughts</h1>
+            </section>
+            {posts.map((post: any) => {
+              if (post.properties.is_published.checkbox) {
+                return (
+                  <Link
+                    href="/note/[slug]"
+                    as={`/note/${post.properties.slug.rich_text[0].plain_text}`}
+                    key={post.properties.slug.rich_text[0].plain_text}
+                  >
+                    <a className="w-full lg:flex my-4 flex-col">
+                      <section>
+                        <img
+                          src={post.properties.cover.files[0].file?.url}
+                          alt={post.properties.title.title.plain_text}
+                          className="rounded-2xl"
+                        />
+                      </section>
+                      <section className="flex flex-col justify-between leading-normal">
+                        <h2 className="px-4 py-2 text-white font-bold text-lg">
+                          {post.properties.title.title.plain_text}
+                        </h2>
+                        <section className="px-4 py-2">
+                          <p className="text-gray-400">
+                            {
+                              post.properties.description.rich_text[0]
+                                .plain_text
+                            }
+                          </p>
+                          <div className="text-gray-300 italic">
+                            jotted on {post.properties.date.date.start}
+                          </div>
                         </section>
-                      )} */}
-                      <div className="text-gray-300 italic">
-                        jotted on {post.date}
-                      </div>
-                    </section>
-                  </a>
-                </Link>
-              );
-            }
-          })}
-        </div>
+                      </section>
+                    </a>
+                  </Link>
+                );
+              }
+            })}
+          </div>
+        </section>
       </div>
     </>
   );

@@ -1,9 +1,12 @@
 import { css } from "goober";
 import { NotionRenderer, BlockMapType } from "react-notion";
 
-import { getAllPosts, Post } from "..";
+import { Post } from "..";
 import Discord from "../../components/discord";
 import Meta from "../../components/head";
+import { getBlocks, getDatabase, getPage } from "../../services/getPosts";
+
+const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
 
 export async function getServerSideProps({
   params: { slug },
@@ -11,19 +14,41 @@ export async function getServerSideProps({
   params: { slug: string };
 }) {
   // Get all posts again
-  const posts = await getAllPosts();
+  const posts = await getDatabase(NOTION_BLOG_ID);
 
   // Find the current blogpost by slug
-  const post = posts.find((t) => t.slug === slug);
+  const post: any = posts.find(
+    (t: any) => t.properties.slug.rich_text[0].plain_text === slug
+  );
 
-  const blocks = await fetch(
-    `https://notion-api.splitbee.io/v1/page/${post!.id}`
-  ).then((res) => res.json());
+  const page = await getPage(post.id);
+
+  const blocks = await getBlocks(post.id);
+
+  const childBlocks = await Promise.all(
+    blocks
+      .filter((block) => block.has_children)
+      .map(async (block) => {
+        return {
+          id: block.id,
+          children: await getBlocks(block.id),
+        };
+      })
+  );
+  const blocksWithChildren = blocks.map((block: any) => {
+    // Add child blocks if the block should contain children but none exists
+    if (block.has_children && !block[block.type].children) {
+      block[block.type]["children"] = childBlocks.find(
+        (x) => x.id === block.id
+      )?.children;
+    }
+    return block;
+  });
 
   return {
     props: {
-      blocks,
-      post,
+      blocks: blocksWithChildren,
+      post: page,
     },
   };
 }

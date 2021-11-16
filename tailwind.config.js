@@ -3,7 +3,7 @@ module.exports = {
   darkMode: "class", // or 'media' or 'class'
   theme: {
     fontFamily: {
-      sans: ["Inter", "sans-serif"],
+      sans: ["Source Serif Pro", "serif"],
     },
     extend: {},
   },

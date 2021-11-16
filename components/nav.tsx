@@ -12,7 +12,7 @@ export default function Nav(): React.ReactElement {
         right: 0;
         width: 100%;
         z-index: 99;
-        background-color: rgba(0, 0, 0, 0.5);
+        background-color: rgba(22, 21, 21, 0.5);
         backdrop-filter: blur(5px);
       `}`}
     >
