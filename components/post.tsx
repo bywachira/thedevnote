@@ -1,6 +1,4 @@
 import { Fragment } from "react";
-import { getBlocks, getDatabase, getPage } from "../services/getPosts";
-import { NOTION_BLOG_ID } from "../pages/index";
 
 export const Text = ({ text }: { text: string }) => {
   return <p className="text-lg text-white">{text}</p>;
