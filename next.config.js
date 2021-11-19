@@ -8,4 +8,7 @@ module.exports = withPWA({
     sw: "/service-worker.js",
   },
   target: "serverless",
+  images: {
+    domains: ["assets.vercel.com", "s3.us-west-2.amazonaws.com"],
+  },
 });

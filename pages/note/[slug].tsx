@@ -1,9 +1,11 @@
 import { css } from "goober";
+import { Fragment } from "react";
 import { NotionRenderer, BlockMapType } from "react-notion";
 
 import { Post } from "..";
 import Discord from "../../components/discord";
 import Meta from "../../components/head";
+import { formatBlocks, renderBlock } from "../../components/post";
 import { getBlocks, getDatabase, getPage } from "../../services/getPosts";
 
 const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
@@ -21,9 +23,11 @@ export async function getServerSideProps({
     (t: any) => t.properties.slug.rich_text[0].plain_text === slug
   );
 
-  const page = await getPage(post.id);
+  console.log({ post });
 
-  const blocks = await getBlocks(post.id);
+  const page = await getPage(post?.id);
+
+  const blocks = await getBlocks(post?.id);
 
   const childBlocks = await Promise.all(
     blocks
@@ -53,23 +57,22 @@ export async function getServerSideProps({
   };
 }
 
-const BlogPost: React.FC<{ post: Post; blocks: BlockMapType }> = ({
-  post,
-  blocks,
-}) => {
-  if (!post) return null;
+const BlogPost: React.FC<{ post: any; blocks: any }> = ({ post, blocks }) => {
+  if (!post || !blocks) return null;
+
+  console.log(blocks);
 
   return (
     <>
       <Meta
-        title={post.title}
-        image={post?.cover[0].url}
-        description={`Post Tag: ${post.type}, Was jotted: ${post.date}`}
-        link={`https://thedevnote.xyz/note/${post.slug}`}
+        title={post.properties.title.title.plain_text}
+        image={post.properties.cover.files[0].file?.url}
+        description={`Post Tag: ${post.type}, Was jotted: ${post.properties.date.date.start}`}
+        link={`https://thedevnote.xyz/note/${post.properties.slug.rich_text[0].plain_text}`}
       />
       <div className="content py-2">
         <h1 className="text-white px-4 mb-2 font-sans text-3xl font-extrabold">
-          {post.title}
+          {post.properties.title.title[0].plain_text}
         </h1>
         {post?.cover && (
           <section
@@ -99,12 +102,17 @@ const BlogPost: React.FC<{ post: Post; blocks: BlockMapType }> = ({
               <p className="text-gray-400">@__wchr</p>
             </a>
           </section>
-          <div className="text-white">jotted on {post.date}</div>
+          <div className="text-white">
+            jotted on {post.properties.date.date.start}
+          </div>
         </section>
         <article className="p-4 text-white font-serif">
-          <NotionRenderer blockMap={blocks} />
+          {/* <NotionRenderer blockMap= /> */}
+          {blocks.map((block: any) => {
+            return <Fragment>{renderBlock(block)}</Fragment>;
+          })}
         </article>
-        <Discord text={<section>Let's continue the chat on Discord</section>} />
+        {/* <Discord text={<section>Let's continue the chat on Discord</section>} /> */}
       </div>
     </>
   );

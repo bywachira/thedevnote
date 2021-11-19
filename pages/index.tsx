@@ -1,8 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import Meta from "../components/head";
 import { getDatabase, getPage } from "../services/getPosts";
 
-const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
+export const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
 
 export type Post = {
   id: string;
@@ -51,13 +52,13 @@ function HomePage({ posts }: { posts: any }) {
                       <section>
                         <img
                           src={post.properties.cover.files[0].file?.url}
-                          alt={post.properties.title.title.plain_text}
+                          alt={post.properties.title.title[0].plain_text}
                           className="rounded-2xl"
                         />
                       </section>
                       <section className="flex flex-col justify-between leading-normal">
                         <h2 className="px-4 py-2 text-white font-bold text-lg">
-                          {post.properties.title.title.plain_text}
+                          {post.properties.title.title[0].plain_text}
                         </h2>
                         <section className="px-4 py-2">
                           <p className="text-gray-400">
