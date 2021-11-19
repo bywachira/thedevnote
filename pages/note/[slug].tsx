@@ -1,92 +1,84 @@
 import { css } from "goober";
-import { Fragment } from "react";
-import { NotionRenderer, BlockMapType } from "react-notion";
-
-import { Post } from "..";
-import Discord from "../../components/discord";
+import imageUrlBuilder from "@sanity/image-url";
+//@ts-ignore
+import BlockContent from "@sanity/block-content-to-react";
+// @ts-ignore
+import moment from "moment";
+// @ts-ignore
+import momentTz from "moment-timezone";
 import Meta from "../../components/head";
-import { formatBlocks, renderBlock } from "../../components/post";
-import { getBlocks, getDatabase, getPage } from "../../services/getPosts";
+import sanityClient from "../../client";
 
-const NOTION_BLOG_ID = "e75cb4251f67492eb20090ac629da31f";
+function urlFor(source: any) {
+  return imageUrlBuilder(sanityClient).image(source);
+}
 
 export async function getServerSideProps({
   params: { slug },
 }: {
   params: { slug: string };
 }) {
-  // Get all posts again
-  const posts = await getDatabase(NOTION_BLOG_ID);
-
-  // Find the current blogpost by slug
-  const post: any = posts.find(
-    (t: any) => t.properties.slug.rich_text[0].plain_text === slug
-  );
-
-  console.log({ post });
-
-  const page = await getPage(post?.id);
-
-  const blocks = await getBlocks(post?.id);
-
-  const childBlocks = await Promise.all(
-    blocks
-      .filter((block) => block.has_children)
-      .map(async (block) => {
-        return {
-          id: block.id,
-          children: await getBlocks(block.id),
-        };
-      })
-  );
-  const blocksWithChildren = blocks.map((block: any) => {
-    // Add child blocks if the block should contain children but none exists
-    if (block.has_children && !block[block.type].children) {
-      block[block.type]["children"] = childBlocks.find(
-        (x) => x.id === block.id
-      )?.children;
+  const response = await sanityClient.fetch(
+    `*[_type == "post" && slug.current == $slug][0]{
+    title,
+    body,
+    slug,
+    "main_image": mainImage,
+    "author_name": author->name,
+    "categories": categories[]->title,
+    "author_image": author->image,
+    "published_at": publishedAt
+  }`,
+    {
+      slug,
     }
-    return block;
-  });
+  );
 
   return {
     props: {
-      blocks: blocksWithChildren,
-      post: page,
+      post: response,
     },
   };
 }
 
-const BlogPost: React.FC<{ post: any; blocks: any }> = ({ post, blocks }) => {
-  if (!post || !blocks) return null;
-
-  console.log(blocks);
+const BlogPost: React.FC<{ post: any }> = ({ post }) => {
+  if (!post) return null;
 
   return (
     <>
       <Meta
-        title={post.properties.title.title.plain_text}
-        image={post.properties.cover.files[0].file?.url}
-        description={`Post Tag: ${post.type}, Was jotted: ${post.properties.date.date.start}`}
-        link={`https://thedevnote.xyz/note/${post.properties.slug.rich_text[0].plain_text}`}
+        title={post.title}
+        image={post.main_image && urlFor(post.main_image).width(1200).url()}
+        description={`Post Tag: ${post.categories.join(
+          ","
+        )}, Was jotted: ${moment(
+          momentTz.tz(post.published_at, momentTz.tz.guess()).format()
+        ).format("MMMM Do YYYY HH:MM")}`}
+        link={`https://thedevnote.xyz/note/${post.slug.current}`}
       />
       <div className="content py-2">
         <h1 className="text-white px-4 mb-2 font-sans text-3xl font-extrabold">
-          {post.properties.title.title[0].plain_text}
+          {post.title}
         </h1>
-        {post?.cover && (
+        {post?.main_image && (
           <section
             className="w-full h-96 pt-4 mb-2 grayscale bg-center text-center overflow-hidden"
-            style={{ backgroundImage: `url(${post?.cover[0].url})` }}
+            style={{
+              backgroundImage: `url(${urlFor(post.main_image)
+                .width(1200)
+                .url()})`,
+            }}
           ></section>
         )}
         <section className="flex p-4 my-4 justify-between place-items-center">
           <section className="flex place-items-center space-x-2">
-            <img
-              className="h-10 w-10 rounded-full ring-2 ring-white"
-              src="https://pbs.twimg.com/profile_images/1388605610028109829/e5FX97PB_400x400.jpg"
-              alt="__wchr"
-            />
+            {post.author_image && (
+              <img
+                className="h-10 w-10 rounded-full ring-2 ring-white"
+                src={urlFor(post.author_image).width(100).url()}
+                alt={post.author_name}
+              />
+            )}
             <a
               href="https://twitter.com/__wchr"
               target="_blank"
@@ -103,14 +95,18 @@ const BlogPost: React.FC<{ post: any; blocks: any }> = ({ post, blocks }) => {
             </a>
           </section>
           <div className="text-white">
-            jotted on {post.properties.date.date.start}
+            jotted on{" "}
+            {moment(
+              momentTz.tz(post.published_at, momentTz.tz.guess()).format()
+            ).format("MMMM Do YYYY HH:MM")}
           </div>
         </section>
         <article className="p-4 text-white font-serif">
-          {/* <NotionRenderer blockMap= /> */}
-          {blocks.map((block: any) => {
-            return <Fragment>{renderBlock(block)}</Fragment>;
-          })}
+          <BlockContent
+            blocks={post.body}
+            imageOptions={{ w: 320, h: 240, fit: "max" }}
+            {...sanityClient.config()}
+          />
         </article>
         {/* <Discord text={<section>Let's continue the chat on Discord</section>} /> */}
       </div>
