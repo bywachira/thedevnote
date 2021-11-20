@@ -17,7 +17,7 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => (
     <div
       className={`${css`
         margin-top: 56px;
-      `} mxw container`}
+      `}`}
     >
       <div className="">{children}</div>
     </div>

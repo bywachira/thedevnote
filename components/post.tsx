@@ -1,140 +1,84 @@
-import { Fragment } from "react";
+import React from "react";
+// @ts-ignore
+import BlockContent from "@sanity/block-content-to-react";
+import imageUrlBuilder from "@sanity/image-url";
+import sanityClient from "../client";
+import Code from "./code";
 
-export const Text = ({ text }: { text: string }) => {
-  return <p className="text-lg text-white">{text}</p>;
-};
+function urlFor(source: any) {
+  return imageUrlBuilder(sanityClient).image(source);
+}
 
-export const formatBlocks = (blocks: any) => {
-  let _blocks: any = [];
+export const serializer = {
+  list: (props: any) => {
+    const { type } = props;
+    const bullet = type === "bullet";
+    if (bullet) {
+      return <ul className="list-disc pl-8 text-lg">{props.children}</ul>;
+    }
+    return <ol className="list-decimal pl-8 text-lg">{props.children}</ol>;
+  },
+  listItem: (props: any) => <li>{props.children}</li>,
+  marks: {
+    link: ({ mark, children }: any) => (
+      <a
+        href={mark.href}
+        rel="noopener"
+        target="_blank"
+        className="text-blue-400 underline"
+      >
+        {children}
+      </a>
+    ),
+  },
+  types: {
+    // code: Code,
+    image: (props: any) => (
+      <figure className="has-text-centered">
+        <img
+          src={urlFor(props.node.asset).width(800).url()}
+          alt={props.node.alt}
+          style={{ borderRadius: "5px" }}
+          className="rounded-2xl"
+        />
 
-  blocks.forEach((block: any) => {
-    Object.assign(_blocks, {
-      [block.type]: block,
-    });
-  });
+        <figcaption>{props.node.caption}</figcaption>
+      </figure>
+    ),
+    block(props: any) {
+      switch (props.node.style) {
+        case "h1":
+          return (
+            <h1 className="text-5xl font-extrabold my-2">{props.children}</h1>
+          );
 
-  return _blocks;
-};
+        case "h2":
+          return <h2 className="font-bold text-4xl my-2">{props.children}</h2>;
 
-export const renderBlock = (block: any) => {
-  const { type, id } = block;
-  const value = block[type];
+        case "h3":
+          return <h3 className="font-bold text-3xl my-2">{props.children}</h3>;
 
-  console.log({ type, value });
-
-  switch (type) {
-    case "column_list":
-      return (
-        <section>
-          {value.children.map((item: string) => {
-            return renderBlock(item);
-          })}
-        </section>
-      );
-
-    case "paragraph":
-      return (
-        <p>
-          {value.text.map((item: any) => {
-            return <Text text={item.plain_text} />;
-          })}
-        </p>
-      );
-    case "callout":
-      return (
-        <section className="flex">
-          <section className="mr-2">
-            {value.icon.type === "emoji" && value.icon.emoji}
-          </section>
-          <section>
-            {value.text.map((item: any) => {
-              if (item.href) {
-                return (
-                  <a href={item.href} className="flex flex-col justify-left">
-                    <p>{item.plain_text}</p>
-                  </a>
-                );
-              } else {
-                return <p>{item.plain_text}</p>;
-              }
-            })}
-          </section>
-        </section>
-      );
-    case "divider":
-      return <hr />;
-    case "heading_1":
-      return (
-        <h1>
-          {value.text.map((item: any) => {
-            return <Text text={item.plain_text} />;
-          })}
-        </h1>
-      );
-    case "heading_2":
-      return (
-        <h2>
-          {value.text.map((item: any) => {
-            return <Text text={item.plain_text} />;
-          })}
-        </h2>
-      );
-    case "heading_3":
-      return (
-        <h3>
-          {value.text.map((item: any) => {
-            return <Text text={item.plain_text} />;
-          })}
-        </h3>
-      );
-    case "bulleted_list_item":
-    case "numbered_list_item":
-      return (
-        <li>
-          {value.text.map((item: any) => {
-            return <Text text={item.plain_text} />;
-          })}
-        </li>
-      );
-    case "to_do":
-      return (
-        <div>
-          <label htmlFor={id}>
-            <input type="checkbox" id={id} defaultChecked={value.checked} />{" "}
-            {value.text.map((item: any) => {
-              return <Text text={item.plain_text} />;
-            })}
-          </label>
-        </div>
-      );
-    case "toggle":
-      return (
-        <details>
-          <summary>
-            {value.text.map((item: any) => {
-              return <Text text={item.plain_text} />;
-            })}
-          </summary>
-          {value.children?.map((block: any) => (
-            <Fragment key={block.id}>{renderBlock(block)}</Fragment>
-          ))}
-        </details>
-      );
-    case "child_page":
-      return <p>{value.title}</p>;
-    case "image":
-      const src =
-        value.type === "external" ? value.external.url : value.file.url;
-      const caption = value.caption ? value.caption[0]?.plain_text : "";
-      return (
-        <figure>
-          <img src={src} alt={caption} />
-          {caption && <figcaption>{caption}</figcaption>}
-        </figure>
-      );
-    default:
-      return `❌ Unsupported block (${
-        type === "unsupported" ? "unsupported by Notion API" : type
-      })`;
-  }
+        case "h4":
+          return <h4 className="font-bold text-2xl my-2">{props.children}</h4>;
+        case "li":
+          return <p className="text-lg">{props.children}</p>;
+        case "blockquote":
+          return (
+            <blockquote className="border-l-4 pl-4 py-2 border-gray-600">
+              {props.children}
+            </blockquote>
+          );
+        case "normal":
+          return (
+            <p className="is-family-secondary is-size-5 my-2 text-lg">
+              {props.children}
+            </p>
+          );
+        default:
+          return (
+            <p className="is-family-secondary text-lg my-2">{props.children}</p>
+          );
+      }
+    },
+  },
 };

@@ -19,6 +19,7 @@ export const getServerSideProps = async () => {
       title,
       body,
       slug,
+      description,
       "main_image": mainImage,
       "author_name": author->name,
       "categories": categories[]->title,
@@ -38,7 +39,7 @@ function HomePage({ posts }: { posts: any }) {
   return (
     <>
       <Meta />
-      <section className="w-full">
+      <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
           <section className="flex justify-left w-full">
             <div className="flex flex-col justify-center">
@@ -53,18 +54,19 @@ function HomePage({ posts }: { posts: any }) {
                       <section>
                         {post.main_image && (
                           <img
-                            src={urlFor(post.main_image).width(600).url()}
+                            src={urlFor(post.main_image).width(800).url()}
                             alt={post.title}
+                            className="filter grayscale rounded-2xl"
                           />
                         )}
                       </section>
                       <section className="flex flex-col justify-between leading-normal">
-                        <h2 className="px-4 py-2 text-white font-bold text-xl">
+                        <h2 className="px-2 py-2 text-white font-bold text-2xl">
                           {post.title}
                         </h2>
-                        <section className="px-4 py-2">
-                          <p className="text-gray-400">{post.description}</p>
-                          <div className="text-gray-300 italic">
+                        <section className="px-2 py-2">
+                          <p className="text-white">{post.description}</p>
+                          <div className="text-gray-600 italic">
                             jotted on{" "}
                             {moment(
                               momentTz
