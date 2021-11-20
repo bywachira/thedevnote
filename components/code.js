@@ -1,5 +1,4 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { dark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 export default function Code({ node }) {
   if (!node || !node.code) {
@@ -7,8 +6,9 @@ export default function Code({ node }) {
   }
   const { language, code } = node;
   return (
-    <SyntaxHighlighter language={language || "text"} style={dark}>
-      {code}
-    </SyntaxHighlighter>
+    <SyntaxHighlighter customStyle={{
+      background: "#000",
+      borderRadius: "8px"
+    }} language={language || "text"}>{code}</SyntaxHighlighter>
   );
 }

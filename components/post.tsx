@@ -32,7 +32,7 @@ export const serializer = {
     ),
   },
   types: {
-    // code: Code,
+    code: Code,
     image: (props: any) => (
       <figure className="has-text-centered">
         <img
