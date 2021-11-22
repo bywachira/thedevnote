@@ -54,6 +54,12 @@ function HomePage({ posts, category }: { posts: any; category: any }) {
       <Meta />
       <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
+          <section className="flex place-items-center">
+            <p className="text-4xl text-white lowercase underline font-bold italic mr-2">
+              {category.title}
+            </p>
+            <p className="text-4xl text-white">Articles</p>
+          </section>
           <section className="flex justify-left w-full">
             <div className="flex flex-col justify-center">
               {posts.map((post: any) => {
