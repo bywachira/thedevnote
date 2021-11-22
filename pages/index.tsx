@@ -28,19 +28,36 @@ export const getServerSideProps = async () => {
     }
   `);
 
+  const categories = await sanityClient.fetch(`
+  *[_type == "category"]{
+    title,
+    description
+  }    
+  `);
+
   return {
     props: {
       posts: response,
+      categories,
     },
   };
 };
 
-function HomePage({ posts }: { posts: any }) {
+function HomePage({ posts, categories }: { posts: any; categories: any }) {
   return (
     <>
       <Meta />
       <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
+          <section className="flex justify-center place-items-center">
+            {categories.map((item: { title: string }) => (
+              <Link href={`/tag/${item.title}`}>
+                <a className="text-white underline mx-2 lowercase">
+                  <p className="italic font-bold">{item.title}</p>
+                </a>
+              </Link>
+            ))}
+          </section>
           <section className="flex justify-left w-full">
             <div className="flex flex-col justify-center">
               {posts.map((post: any) => {
