@@ -1,22 +1,21 @@
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "tailwindcss/tailwind.css";
-import Script from 'next/script';
+import splitbee from "@splitbee/web";
 import { setup } from "goober";
 import { prefix } from "goober-autoprefixer";
 import AppLayout from "../layouts/app-layout";
 
 import "../styles.css";
 import React, { useEffect } from "react";
-import splitbee from "@splitbee/web";
 
 setup(React.createElement, prefix);
 
 export default function MyApp({ Component, pageProps }: any) {
   useEffect(() => {
     splitbee.init({
-      scriptUrl: "/bee.js",
-      apiUrl: "/_hive",
+      apiUrl: '/sb-api',
+      scriptUrl: '/sb.js'
     });
   }, []);
 
@@ -24,8 +23,9 @@ export default function MyApp({ Component, pageProps }: any) {
     Component?.getLayout ||
     ((page: React.ReactNode) => <AppLayout children={page} />);
 
-  return getLayout(<>
-    <Script src="https://cdn.splitbee.io/sb.js" async />
-    <Component {...pageProps} />
-  </>);
+  return getLayout(
+    <>ß
+      <Component {...pageProps} />
+    </>
+  );
 }
