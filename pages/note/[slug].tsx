@@ -10,6 +10,8 @@ import Link from "next/link";
 import Meta from "../../components/head";
 import sanityClient from "../../client";
 import { serializer } from "../../components/post";
+import { useEffect } from "react";
+import splitbee from "@splitbee/web";
 
 function urlFor(source: any) {
   return imageUrlBuilder(sanityClient).image(source);
@@ -45,6 +47,14 @@ export async function getServerSideProps({
 
 const BlogPost: React.FC<{ post: any }> = ({ post }) => {
   if (!post) return null;
+
+  useEffect(() => {
+    const action: string = `reading-post-${post.slug.current}`;
+
+    const data: any = {};
+
+    splitbee.track(action, data);
+  }, [])
 
   return (
     <>
