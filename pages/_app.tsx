@@ -1,6 +1,7 @@
 import "react-notion/src/styles.css";
 import "prismjs/themes/prism-tomorrow.css";
 import "tailwindcss/tailwind.css";
+import Script from 'next/script';
 import { setup } from "goober";
 import { prefix } from "goober-autoprefixer";
 import AppLayout from "../layouts/app-layout";
@@ -23,5 +24,8 @@ export default function MyApp({ Component, pageProps }: any) {
     Component?.getLayout ||
     ((page: React.ReactNode) => <AppLayout children={page} />);
 
-  return getLayout(<Component {...pageProps} />);
+  return getLayout(<>
+    <Script src="https://cdn.splitbee.io/sb.js" async />
+    <Component {...pageProps} />
+  </>);
 }

@@ -115,7 +115,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
               }}
             ></section>
           )}
-          <article className="p-4 text-white font-serif">
+          <article className="p-4 text-white font-serif leading-loose">
             <BlockContent
               blocks={post.body}
               imageOptions={{ w: 320, h: 240, fit: "max" }}
