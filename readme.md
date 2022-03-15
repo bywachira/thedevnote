@@ -1,5 +1,3 @@
-# react notion blog
+# The Dev Note
 
-This is a simple example blog example using react-notion, notion-api-worker & Next.js.
-
-Go to [https://splitbee.io/blog/notion-as-cms-using-nextjs](https://splitbee.io/blog/notion-as-cms-using-nextjs) for the documentation.
+[wchr's](https://twitter.com/__wchr) public note taking website
