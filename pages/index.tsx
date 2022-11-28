@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 //@ts-ignore
@@ -51,7 +52,7 @@ function HomePage({ posts, categories }: { posts: any; categories: any }) {
         <div className="max-w-3xl p-4 font-sans mx-auto">
           <section className="flex justify-center place-items-center">
             {categories.map((item: { title: string }) => (
-              <Link href={`/tag/${item.title}`}>
+              <Link href={`/tag/${item.title}`} key={item.title}>
                 <a className="text-white underline mx-2 lowercase">
                   <p className="italic font-bold">{item.title}</p>
                 </a>

@@ -23,7 +23,7 @@ export const serializer = {
     link: ({ mark, children }: any) => (
       <a
         href={mark.href}
-        rel="noopener"
+        rel="noopener noreferrer"
         target="_blank"
         className="text-blue-400 underline"
       >
@@ -32,7 +32,10 @@ export const serializer = {
     ),
   },
   types: {
-    code: Code,
+    code: (props: any) => {
+      console.log({ props })
+      return <Code node={props.node} />
+    },
     image: (props: any) => (
       <figure className="has-text-centered">
         <img

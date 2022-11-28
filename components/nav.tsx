@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { css } from "goober";
 import Link from "next/link";
 import React from "react";
@@ -20,7 +21,7 @@ export default function Nav(): React.ReactElement {
         <a
           href="https://twitter.com/__wchr"
           target="_blank"
-          className="hover:text-white text-gray-400"
+          className="hover:text-white text-gray-400" rel="noreferrer"
         >
           Twitter
         </a>
@@ -32,7 +33,7 @@ export default function Nav(): React.ReactElement {
         <a
           href="https://discord.gg/rJuy8brmKn"
           target="_blank"
-          className="hover:text-white text-gray-400"
+          className="hover:text-white text-gray-400" rel="noreferrer"
         >
           Discord
         </a>

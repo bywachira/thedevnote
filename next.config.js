@@ -1,6 +1,3 @@
-const withPWA = require("next-pwa");
-const runtimeCaching = require("next-pwa/cache");
-
 const rewrites = async () => [
   {
     destination: 'https://cdn.splitbee.io/sb.js',
@@ -12,15 +9,10 @@ const rewrites = async () => [
   }
 ]
 
-module.exports = withPWA({
-  pwa: {
-    dest: "public",
-    runtimeCaching,
-    sw: "/service-worker.js",
-  },
+module.exports = {
   target: "serverless",
   images: {
     domains: ["assets.vercel.com", "s3.us-west-2.amazonaws.com"],
   },
   rewrites
-});
+};

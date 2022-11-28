@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { css } from "goober";
 import React from "react";
 
@@ -23,7 +24,7 @@ export default function Discord(props: Props): React.ReactElement {
         grid-row-gap: 0px;
         padding: 8px;
         margin: 4px;
-      `}`}
+      `}`} rel="noreferrer"
     >
       <section className="text-white">
         <svg

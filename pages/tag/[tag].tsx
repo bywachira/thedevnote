@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
 import imageUrlBuilder from "@sanity/image-url";
 //@ts-ignore
@@ -15,7 +16,7 @@ function urlFor(source: any) {
 
 export const getServerSideProps = async ({ params: { tag } }: any) => {
   const response = await sanityClient.fetch(`
-    *[_type == "post" && publishedAt < now()] && !(_id in path('drafts.**'))]|order(publishedAt desc){
+    *[_type == "post" && publishedAt < now()]|order(publishedAt desc){
       title,
       body,
       slug,

@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { css } from "goober";
 import imageUrlBuilder from "@sanity/image-url";
 //@ts-ignore
@@ -54,7 +56,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
     const data: any = {};
 
     splitbee.track(action, data);
-  }, [])
+  }, [post.slug])
 
   return (
     <>
@@ -76,7 +78,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
           <section className="text-center text-white">
             <section className="flex justify-center place-items-center">
               {post.categories.map((item: string) => (
-                <Link href={`/tag/${item}`}>
+                <Link href={`/tag/${item}`} key={item}>
                   <a className="text-white underline mx-2 lowercase">
                     <p className="italic font-bold">{item}</p>
                   </a>
@@ -105,7 +107,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
                   grid-template-rows: repeat(2, 1fr);
                   grid-column-gap: 0px;
                   grid-row-gap: 0px;
-                `} text-white`}
+                `} text-white`} rel="noreferrer"
               >
                 <p className="font-extrabold">wachira</p>
                 <p className="text-gray-400">@__wchr</p>
@@ -138,7 +140,6 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
               }}
             />
           </article>
-          {/* <Discord text={<section>Let's continue the chat on Discord</section>} /> */}
         </div>
       </section>
     </>
