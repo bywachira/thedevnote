@@ -18,29 +18,32 @@ export default function Meta(props: MetaProps): React.ReactElement {
   const LINK = props.link || "https://thedevnote.xyz";
 
   return (
-    <Head key={1}>
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="preconnect" href="https://fonts.gstatic.com" />
-      <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&display=swap"
-        rel="stylesheet"
-      />
-      <title>The Dev Note</title>
-      <meta name="title" content={TITLE} />
-      <meta name="description" content={DESCRIPTION} />
+    <>
+      <Head key={1}>
+        <link rel="shortcut icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@100;300;400;600;800;900&display=swap"
+          rel="stylesheet"
+        />
+        <title>The Dev Note</title>
+        <meta name="title" content={TITLE} />
+        <meta name="description" content={DESCRIPTION} />
 
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content={LINK} />
-      <meta property="og:title" content={TITLE} />
-      <meta property="og:description" content={DESCRIPTION} />
-      <meta property="og:image" content={IMAGE} />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={LINK} />
+        <meta property="og:title" content={TITLE} />
+        <meta property="og:description" content={DESCRIPTION} />
+        <meta property="og:image" content={IMAGE} />
 
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={LINK} />
-      <meta property="twitter:title" content={TITLE} />
-      <meta property="twitter:description" content={DESCRIPTION} />
-      <meta property="twitter:image" content={IMAGE} />
-    </Head>
+        <meta property="twitter:card" content="summary_large_image" />
+        <meta property="twitter:url" content={LINK} />
+        <meta property="twitter:title" content={TITLE} />
+        <meta property="twitter:description" content={DESCRIPTION} />
+        <meta property="twitter:image" content={IMAGE} />
+        <script src="https://app.suportal.co/api/widget/8f9810a8-af6b-4bb8-b5a7-2b0af09d8505"></script>
+      </Head>
+    </>
   );
 }
