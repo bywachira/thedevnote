@@ -43,7 +43,7 @@ export default function Meta(props: MetaProps): React.ReactElement {
         <meta property="twitter:title" content={TITLE} />
         <meta property="twitter:description" content={DESCRIPTION} />
         <meta property="twitter:image" content={IMAGE} />
-        <script src="https://app.suportal.co/api/widget/8f9810a8-af6b-4bb8-b5a7-2b0af09d8505"></script>
+        <script src="https://app.suportal.co/api/widget/ea8a05af-102b-4862-828b-530489106e52"></script>
       </Head>
     </>
   );
