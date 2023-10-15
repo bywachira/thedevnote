@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link";
-import imageUrlBuilder from "@sanity/image-url";
 //@ts-ignore
 import BlockContent from "@sanity/block-content-to-react";
 // @ts-ignore
@@ -9,10 +8,6 @@ import moment from "moment";
 import momentTz from "moment-timezone";
 import Meta from "../components/head";
 import sanityClient from "../client";
-
-function urlFor(source: any) {
-  return imageUrlBuilder(sanityClient).image(source);
-}
 
 export const getServerSideProps = async () => {
   const response = await sanityClient.fetch(`
