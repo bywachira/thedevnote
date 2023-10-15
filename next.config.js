@@ -10,7 +10,6 @@ const rewrites = async () => [
 ]
 
 module.exports = {
-  target: "serverless",
   images: {
     domains: ["assets.vercel.com", "s3.us-west-2.amazonaws.com"],
   },

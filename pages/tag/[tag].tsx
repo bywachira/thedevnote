@@ -69,8 +69,8 @@ function HomePage({ posts, category }: { posts: any; category: any }) {
                     href="/note/[slug]"
                     as={`/note/${post.slug.current}`}
                     key={post.slug.current}
+                    className="w-full lg:flex my-4 flex-col"
                   >
-                    <a className="w-full lg:flex my-4 flex-col">
                       <section>
                         {post.main_image && (
                           <img
@@ -96,7 +96,6 @@ function HomePage({ posts, category }: { posts: any; category: any }) {
                           </div>
                         </section>
                       </section>
-                    </a>
                   </Link>
                 );
               })}

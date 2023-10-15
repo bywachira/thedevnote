@@ -52,10 +52,8 @@ function HomePage({ posts, categories }: { posts: any; categories: any }) {
         <div className="max-w-3xl p-4 font-sans mx-auto">
           <section className="flex justify-center place-items-center">
             {categories.map((item: { title: string }) => (
-              <Link href={`/tag/${item.title}`} key={item.title}>
-                <a className="text-white underline mx-2 lowercase">
-                  <p className="italic font-bold">{item.title}</p>
-                </a>
+              <Link className="text-white underline mx-2 lowercase" href={`/tag/${item.title}`} key={item.title}>
+                <p className="italic font-bold">{item.title}</p>
               </Link>
             ))}
           </section>
@@ -67,12 +65,12 @@ function HomePage({ posts, categories }: { posts: any; categories: any }) {
                     href="/note/[slug]"
                     as={`/note/${post.slug.current}`}
                     key={post.slug.current}
+                    className="w-full lg:flex my-4 flex-col"
                   >
-                    <a className="w-full lg:flex my-4 flex-col">
                       <section>
                         {post.main_image && (
                           <img
-                            src={urlFor(post.main_image).width(800).url()}
+                            src={`/api/og?title=${post.title}`}
                             alt={post.title}
                             className="filter grayscale rounded-2xl"
                           />
@@ -94,7 +92,6 @@ function HomePage({ posts, categories }: { posts: any; categories: any }) {
                           </div>
                         </section>
                       </section>
-                    </a>
                   </Link>
                 );
               })}

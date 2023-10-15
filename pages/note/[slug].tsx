@@ -79,9 +79,8 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
             <section className="flex justify-center place-items-center">
               {post.categories.map((item: string) => (
                 <Link href={`/tag/${item}`} key={item}>
-                  <a className="text-white underline mx-2 lowercase">
                     <p className="italic font-bold">{item}</p>
-                  </a>
+
                 </Link>
               ))}
             </section>
