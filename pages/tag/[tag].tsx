@@ -52,7 +52,7 @@ export const getServerSideProps = async ({ params: { tag } }: any) => {
 function HomePage({ posts, category }: { posts: any; category: any }) {
   return (
     <>
-      <Meta />
+      <Meta title={category.title} />
       <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
           <section className="flex place-items-center">

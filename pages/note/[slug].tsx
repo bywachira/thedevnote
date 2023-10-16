@@ -61,7 +61,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
     <>
       <Meta
         title={post.title}
-        image={post.main_image && urlFor(post.main_image).width(1200).url()}
+        image={`/api/og?title=${post.title}`}
         description={`Post Tag: ${post.categories.join(
           ","
         )}, Was jotted: ${moment(

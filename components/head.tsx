@@ -15,7 +15,7 @@ export default function Meta(props: MetaProps): React.ReactElement {
   const DESCRIPTION =
     props.description ||
     "The 'Dev Note', which belonged to the developers and makers of this world, and grants them the supernatural ability to jot down things they learned, the mistakes, what they are building, and more in its pages.";
-  const IMAGE = props.image || "/thedevnote.png";
+  const IMAGE = props.image || `/api/og?title=${TITLE}`;
   const LINK = props.link || "https://thedevnote.xyz";
 
   return (
