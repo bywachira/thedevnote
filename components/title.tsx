@@ -7,7 +7,7 @@ type TitleProps = {
 export default function Title(props: TitleProps): React.ReactElement {
   return (
     <section className="">
-      <p className="text-white">{props.title}</p>
+      <p className="text-black">{props.title}</p>
       {/* <svg
         xmlns="http://www.w3.org/2000/svg"
         version="1.1"

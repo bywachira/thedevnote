@@ -14,7 +14,7 @@ export default function Loader(): React.ReactElement {
   return (
     <div className={LoaderContainer}>
       <svg
-        className="animate-spin -ml-1 mr-3 h-16 w-16 text-white"
+        className="animate-spin -ml-1 mr-3 h-16 w-16 text-black"
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 24 24"

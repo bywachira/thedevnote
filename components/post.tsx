@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import React from "react";
 // @ts-ignore
 import BlockContent from "@sanity/block-content-to-react";
@@ -52,17 +53,16 @@ export const serializer = {
       switch (props.node.style) {
         case "h1":
           return (
-            <h1 className="text-5xl font-extrabold my-2">{props.children}</h1>
+            <h1 className="text-5xl font-extrabold mt-[24px] mb-[16px]">{props.children}</h1>
           );
-
         case "h2":
-          return <h2 className="font-bold text-4xl my-2">{props.children}</h2>;
+          return <h2 className="font-bold text-4xl mt-[24px] mb-[16px]">{props.children}</h2>;
 
         case "h3":
-          return <h3 className="font-bold text-3xl my-2">{props.children}</h3>;
+          return <h3 className="font-bold text-3xl mt-[24px] mb-[16px]">{props.children}</h3>;
 
         case "h4":
-          return <h4 className="font-bold text-2xl my-2">{props.children}</h4>;
+          return <h4 className="font-bold text-2xl mt-[24px] mb-[16px]">{props.children}</h4>;
         case "li":
           return <p className="text-lg">{props.children}</p>;
         case "blockquote":
@@ -73,13 +73,13 @@ export const serializer = {
           );
         case "normal":
           return (
-            <p className="is-family-secondary is-size-5 my-2 text-lg">
+            <p className="is-family-secondary is-size-5 my-2 text-lg leading-loose">
               {props.children}
             </p>
           );
         default:
           return (
-            <p className="is-family-secondary text-lg my-2">{props.children}</p>
+            <p className="is-family-secondary text-lg my-2 leading-loose">{props.children}</p>
           );
       }
     },

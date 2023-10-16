@@ -27,6 +27,7 @@
     "@sanity/image-url": "^1.0.1",
     "@splitbee/web": "^0.3.0",
     "@uiw/codemirror-theme-github": "^4.15.1",
+    "@uiw/codemirror-theme-tokyo-night": "^4.21.20",
     "@uiw/react-codemirror": "^4.15.1",
     "@vercel/og": "^0.5.18",
     "axios": "^1.5.1",

@@ -56,10 +56,10 @@ function HomePage({ posts, category }: { posts: any; category: any }) {
       <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
           <section className="flex place-items-center">
-            <p className="text-4xl text-white lowercase underline font-bold italic mr-2">
+            <p className="text-4xl text-black lowercase underline font-bold italic mr-2">
               {category.title}
             </p>
-            <p className="text-4xl text-white">Articles</p>
+            <p className="text-4xl text-black">Articles</p>
           </section>
           <section className="flex justify-left w-full">
             <div className="flex flex-col justify-center">
@@ -81,11 +81,11 @@ function HomePage({ posts, category }: { posts: any; category: any }) {
                         )}
                       </section>
                       <section className="flex flex-col justify-between leading-normal">
-                        <h2 className="px-2 py-2 text-white font-bold text-2xl">
+                        <h2 className="px-2 py-2 text-black font-bold text-2xl">
                           {post.title}
                         </h2>
                         <section className="px-2 py-2">
-                          <p className="text-white">{post.description}</p>
+                          <p className="text-black">{post.description}</p>
                           <div className="text-gray-600 italic">
                             jotted on{" "}
                             {moment(

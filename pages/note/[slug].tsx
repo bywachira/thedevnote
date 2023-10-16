@@ -56,7 +56,7 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
     const data: any = {};
 
     splitbee.track(action, data);
-  }, [post.slug])
+  }, [post.slug]);
 
   return (
     <>
@@ -71,19 +71,18 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
         link={`https://thedevnote.xyz/note/${post.slug.current}`}
       />
       <section className="my-8">
-        <h1 className="text-white text-center px-4 mb-2 font-sans text-5xl font-extrabold">
+        <h1 className="text-black text-center px-4 mb-2 max-w-screen text-5xl font-extrabold">
           {post.title}
         </h1>
         <section className="flex flex-col justify-center place-items-center">
-          <section className="text-center text-white">
-            <section className="flex justify-center place-items-center">
+          <section className="text-center text-black">
+            {/* <section className="flex justify-center place-items-center">
               {post.categories.map((item: string) => (
                 <Link href={`/tag/${item}`} key={item}>
-                    <p className="italic font-bold">{item}</p>
-
+                  <p className="italic font-bold">{item}</p>
                 </Link>
               ))}
-            </section>
+            </section> */}
             <p>
               {moment(
                 momentTz.tz(post.published_at, momentTz.tz.guess()).format()
@@ -106,7 +105,8 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
                   grid-template-rows: repeat(2, 1fr);
                   grid-column-gap: 0px;
                   grid-row-gap: 0px;
-                `} text-white`} rel="noreferrer"
+                `} text-black`}
+                rel="noreferrer"
               >
                 <p className="font-extrabold">wachira</p>
                 <p className="text-gray-400">@__wchr</p>
@@ -115,18 +115,12 @@ const BlogPost: React.FC<{ post: any }> = ({ post }) => {
           </section>
         </section>
         <div className="content py-2">
-          {post?.main_image && (
-            <section
-              className="w-full rounded-2xl h-96 pt-4 mb-2 grayscale bg-center text-center overflow-hidden"
-              style={{
-                backgroundImage: `url(${urlFor(post.main_image)
-                  .width(1200)
-                  .url()})`,
-                backgroundSize: "cover",
-              }}
-            ></section>
-          )}
-          <article className="p-4 text-white font-serif leading-loose">
+          <img
+            src={`/api/og?title=${post.title}`}
+            alt={post.title}
+            className="filter grayscale rounded-2xl"
+          />
+          <article className="p-4 text-black font-serif leading-loose">
             <BlockContent
               blocks={post.body}
               imageOptions={{ w: 320, h: 240, fit: "max" }}

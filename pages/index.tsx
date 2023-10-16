@@ -39,19 +39,23 @@ export const getServerSideProps = async () => {
   };
 };
 
-function HomePage({ posts, categories }: { posts: any; categories: any }) {
+function HomePage({ posts }: { posts: any; categories: any }) {
   return (
     <>
       <Meta />
       <section className="w-full mx-auto">
         <div className="max-w-3xl p-4 font-sans mx-auto">
-          <section className="flex justify-center place-items-center">
+          {/* <section className="flex justify-center place-items-center">
             {categories.map((item: { title: string }) => (
-              <Link className="text-white underline mx-2 lowercase" href={`/tag/${item.title}`} key={item.title}>
+              <Link
+                className="text-black underline mx-2 lowercase"
+                href={`/tag/${item.title}`}
+                key={item.title}
+              >
                 <p className="italic font-bold">{item.title}</p>
               </Link>
             ))}
-          </section>
+          </section> */}
           <section className="flex justify-left w-full">
             <div className="flex flex-col justify-center">
               {posts.map((post: any) => {
@@ -62,31 +66,29 @@ function HomePage({ posts, categories }: { posts: any; categories: any }) {
                     key={post.slug.current}
                     className="w-full lg:flex my-4 flex-col"
                   >
-                      <section>
-                        {post.main_image && (
-                          <img
-                            src={`/api/og?title=${post.title}`}
-                            alt={post.title}
-                            className="filter grayscale rounded-2xl"
-                          />
-                        )}
+                    <section>
+                      {/* <img
+                        src={`/api/og?title=${post.title}`}
+                        alt={post.title}
+                        className="filter grayscale rounded-2xl"
+                      /> */}
+                    </section>
+                    <section className="flex flex-col justify-between leading-normal">
+                      <h2 className="px-2 py-2 text-black font-bold text-2xl">
+                        {post.title}
+                      </h2>
+                      <section className="px-2 py-2">
+                        <p className="text-black">{post.description}</p>
+                        <div className="text-gray-600 italic">
+                          jotted on{" "}
+                          {moment(
+                            momentTz
+                              .tz(post.published_at, momentTz.tz.guess())
+                              .format()
+                          ).format("MMMM Do YYYY HH:MM")}
+                        </div>
                       </section>
-                      <section className="flex flex-col justify-between leading-normal">
-                        <h2 className="px-2 py-2 text-white font-bold text-2xl">
-                          {post.title}
-                        </h2>
-                        <section className="px-2 py-2">
-                          <p className="text-white">{post.description}</p>
-                          <div className="text-gray-600 italic">
-                            jotted on{" "}
-                            {moment(
-                              momentTz
-                                .tz(post.published_at, momentTz.tz.guess())
-                                .format()
-                            ).format("MMMM Do YYYY HH:MM")}
-                          </div>
-                        </section>
-                      </section>
+                    </section>
                   </Link>
                 );
               })}

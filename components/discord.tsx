@@ -26,7 +26,7 @@ export default function Discord(props: Props): React.ReactElement {
         margin: 4px;
       `}`} rel="noreferrer"
     >
-      <section className="text-white">
+      <section className="text-black">
         <svg
           id="Bold"
           enable-background="new 0 0 24 24"
@@ -41,7 +41,7 @@ export default function Discord(props: Props): React.ReactElement {
       </section>
       <section className="flex place-items-center">
         <section>
-          <h1 className="text-white font-bold text-2xl">Join TDN's Discord</h1>
+          <h1 className="text-black font-bold text-2xl">Join TDN's Discord</h1>
           <p className="text-gray-400">{props.text}</p>
         </section>
       </section>
