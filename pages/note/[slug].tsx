@@ -8,7 +8,6 @@ import BlockContent from "@sanity/block-content-to-react";
 import moment from "moment";
 // @ts-ignore
 import momentTz from "moment-timezone";
-import Link from "next/link";
 import Meta from "../../components/head";
 import sanityClient from "../../client";
 import { serializer } from "../../components/post";
