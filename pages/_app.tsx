@@ -1,6 +1,7 @@
 import "react-notion/src/styles.css";
 import "tailwindcss/tailwind.css";
 import splitbee from "@splitbee/web";
+import { Analytics } from "@vercel/analytics/react";
 import { setup } from "goober";
 import { prefix } from "goober-autoprefixer";
 import AppLayout from "../layouts/app-layout";
@@ -21,13 +22,12 @@ export default function MyApp({ Component, pageProps }: any) {
 
   const getLayout =
     Component?.getLayout ||
-    ((page: React.ReactNode) => <AppLayout>
-      {page}
-    </AppLayout>);
+    ((page: React.ReactNode) => <AppLayout>{page}</AppLayout>);
 
   return getLayout(
     <>
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }

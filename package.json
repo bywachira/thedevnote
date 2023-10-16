@@ -29,6 +29,7 @@
     "@uiw/codemirror-theme-github": "^4.15.1",
     "@uiw/codemirror-theme-tokyo-night": "^4.21.20",
     "@uiw/react-codemirror": "^4.15.1",
+    "@vercel/analytics": "^1.1.1",
     "@vercel/og": "^0.5.18",
     "axios": "^1.5.1",
     "firebase": "^10.5.0",
